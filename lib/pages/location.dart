@@ -10,6 +10,7 @@ class Location extends StatefulWidget {
 
 class _LocationState extends State<Location> {
   List<WorldTime> locations=[
+    WorldTime(location: 'Kathmandu', flag: 'usa.png', url: 'Asia/Kathmandu'),
     WorldTime(location: 'Cairo', flag: 'egypt.png', url: 'Africa/Cairo'),
     WorldTime(location: 'Berlin', flag: 'germany.png', url: 'Europe/Berlin'),
     WorldTime(location: 'Athens', flag: 'greece.png', url: 'Europe/London'),
@@ -23,10 +24,14 @@ class _LocationState extends State<Location> {
 
   ];
 
-  void UpdateTime(index) async
+  void updateTime(index) async
   {
     WorldTime obj=locations[index];
     await obj.getData();
+    navigateBack(obj);
+  }
+
+  void navigateBack(WorldTime obj){
     Navigator.pop(context,{
       'location':obj.location,
       'flag':obj.flag,
@@ -39,21 +44,28 @@ class _LocationState extends State<Location> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Choose Location'),
-        centerTitle: true,
+        title: const Text('Choose Location',style: TextStyle(color: Colors.white,),),
+        centerTitle: false,
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.grey[900],
+        leading: IconButton(
+          onPressed: (){
+            Navigator.pop(context);
+          },
+          icon: const Icon( Icons.arrow_back,color: Colors.white,),
+        ),
       ),
       body:ListView.builder(
           itemCount: locations.length,
           itemBuilder: (context,index){
             return Card(
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 5,horizontal: 10),
+                padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
                 child: ListTile(
                   onTap: (){
-                    UpdateTime(index);
+                    updateTime(index);
                   },
-                  title: Text('${locations[index].location}'),
+                  title: Text(locations[index].location),
                   leading: CircleAvatar(
                     backgroundImage: AssetImage('assets/${locations[index].flag}'),
                   ),

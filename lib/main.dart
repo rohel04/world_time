@@ -10,11 +10,12 @@ void main() {
     statusBarColor: Colors.grey[900], // status bar color
   ));
   runApp(MaterialApp(
+    
     initialRoute: '/',
     routes: {
-      '/':(context)=>Loading(),
-      '/location':(context)=>Location(),
-      '/home':(context)=>Home(),
+      '/':(context)=>const Loading(),
+      '/location':(context)=>const Location(),
+      '/home':(context)=>const Home(),
     },
   ));
 }

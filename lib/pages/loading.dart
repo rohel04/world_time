@@ -1,8 +1,6 @@
 import 'package:world_time/service/world_time.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:http/http.dart';
-import 'dart:convert';
 
 class Loading extends StatefulWidget {
   const Loading({Key? key}) : super(key: key);
@@ -17,6 +15,10 @@ class _LoadingState extends State<Loading> {
   void getWorldTime() async{
     WorldTime obj=WorldTime(location: 'London', flag: 'uk.png', url: 'Europe/London');
     await obj.getData();
+    navigateToHome(obj);
+  }
+
+  void navigateToHome(WorldTime obj){
     Navigator.pushReplacementNamed(context, '/home',arguments: {
       'location':obj.location,
       'flag':obj.flag,
@@ -35,7 +37,7 @@ class _LoadingState extends State<Loading> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
       child: Center(
